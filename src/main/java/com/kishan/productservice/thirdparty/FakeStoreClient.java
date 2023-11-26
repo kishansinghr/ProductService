@@ -22,7 +22,8 @@ public class FakeStoreClient {
     private final RestTemplateBuilder restTemplateBuilder;
 
     @Autowired
-    FakeStoreClient(RestTemplateBuilder restTemplateBuilder, @Value("fakestore.api.url") String fakeStoreApiUrl) {
+    FakeStoreClient(RestTemplateBuilder restTemplateBuilder,
+                    @Value("${fakestore.api.url}") String fakeStoreApiUrl) {
         this.restTemplateBuilder = restTemplateBuilder;
         this.FAKE_STORE_GENERIC_URL = fakeStoreApiUrl;
         this.FAKE_STORE_PRODUCT_SPECIFIC_URL = fakeStoreApiUrl + "/{id}";

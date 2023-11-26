@@ -12,6 +12,11 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorDto> handleProductNotFoundException(ProductNotFoundException exception) {
         ErrorDto errorDto = new ErrorDto(HttpStatus.NOT_FOUND.value(), exception.getMessage());
-        return new ResponseEntity<ErrorDto>(errorDto, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAllExceptions(Exception exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
