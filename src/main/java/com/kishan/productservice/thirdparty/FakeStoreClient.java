@@ -1,7 +1,6 @@
 package com.kishan.productservice.thirdparty;
 
 import com.kishan.productservice.dtos.FakeStoreDto;
-import com.kishan.productservice.dtos.ProductMapper;
 import com.kishan.productservice.exceptions.ProductNotFoundException;
 import com.kishan.productservice.exceptions.SomethingWentWrongException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,8 @@ public class FakeStoreClient {
 
         List<FakeStoreDto> productList = new ArrayList<>();
         if(responseEntity.getBody()!=null)
-        Collections.addAll(productList, responseEntity.getBody());
+            Collections.addAll(productList, responseEntity.getBody());
+
         return productList;
     }
 

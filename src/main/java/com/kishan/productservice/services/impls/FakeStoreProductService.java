@@ -56,7 +56,7 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public GenericProductDto deleteProductById(long id) throws ProductNotFoundException, SomethingWentWrongException {
+    public GenericProductDto deleteProductById(long id) throws ProductNotFoundException {
         FakeStoreDto fakeStoreDto = fakeStoreClient.deleteProductById(id);
         if(fakeStoreDto != null) {
             return productMapper.convertToGenericProductDto(fakeStoreDto);
