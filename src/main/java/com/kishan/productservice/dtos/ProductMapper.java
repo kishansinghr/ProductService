@@ -15,6 +15,7 @@ public class ProductMapper {
         genericProductDto.setPrice(fakeStoreDto.getPrice());
         return genericProductDto;
     }
+
     public FakeStoreDto convertToFakeStoreDto(GenericProductDto genericProductDto) {
         FakeStoreDto fakeStoreDto = new FakeStoreDto();
         fakeStoreDto.setId(genericProductDto.getId());

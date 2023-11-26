@@ -18,6 +18,7 @@ public class FakeStoreProductService implements ProductService {
 
     private final FakeStoreClient fakeStoreClient;
     private final ProductMapper productMapper;
+
     @Autowired
     FakeStoreProductService(FakeStoreClient fakeStoreClient, ProductMapper productMapper) {
         this.fakeStoreClient = fakeStoreClient;
@@ -37,31 +38,31 @@ public class FakeStoreProductService implements ProductService {
     @Override
     public GenericProductDto getProductById(long id) throws ProductNotFoundException, SomethingWentWrongException {
         FakeStoreDto fakeStoreDto = fakeStoreClient.getProductById(id);
-        if(fakeStoreDto == null) {
-            throw new ProductNotFoundException("Product not found by id "+id+".");
+        if (fakeStoreDto == null) {
+            throw new ProductNotFoundException("Product not found by id " + id + ".");
         } else {
             return productMapper.convertToGenericProductDto(fakeStoreDto);
         }
     }
 
     @Override
-    public GenericProductDto updateProductById(long id, GenericProductDto dto)  throws ProductNotFoundException {
+    public GenericProductDto updateProductById(long id, GenericProductDto dto) throws ProductNotFoundException {
         FakeStoreDto fakeStoreDto
                 = fakeStoreClient.updateProductById(id, productMapper.convertToFakeStoreDto(dto));
-        if(fakeStoreDto != null) {
+        if (fakeStoreDto != null) {
             return productMapper.convertToGenericProductDto(fakeStoreDto);
         } else {
-            throw new ProductNotFoundException("Product not found by id "+id+".");
+            throw new ProductNotFoundException("Product not found by id " + id + ".");
         }
     }
 
     @Override
     public GenericProductDto deleteProductById(long id) throws ProductNotFoundException {
         FakeStoreDto fakeStoreDto = fakeStoreClient.deleteProductById(id);
-        if(fakeStoreDto != null) {
+        if (fakeStoreDto != null) {
             return productMapper.convertToGenericProductDto(fakeStoreDto);
         } else {
-            throw new ProductNotFoundException("Product not found by id "+id+".");
+            throw new ProductNotFoundException("Product not found by id " + id + ".");
         }
     }
 
