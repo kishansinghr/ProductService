@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ProductService {
 
-    public List<GenericProductDto> getAllProducts();
-    public GenericProductDto getProductById(long id) throws ProductNotFoundException, SomethingWentWrongException;
-    public GenericProductDto updateProductById(long id, GenericProductDto dto) throws ProductNotFoundException;
-    public  GenericProductDto deleteProductById(long id) throws ProductNotFoundException, SomethingWentWrongException;
-    public GenericProductDto createProduct(GenericProductDto dto);
+    List<GenericProductDto> getAllProducts();
+    GenericProductDto getProductById(long id) throws ProductNotFoundException, SomethingWentWrongException;
+    GenericProductDto updateProductById(long id, GenericProductDto dto) throws ProductNotFoundException;
+    GenericProductDto deleteProductById(long id) throws ProductNotFoundException, SomethingWentWrongException;
+    GenericProductDto createProduct(GenericProductDto dto);
 }
