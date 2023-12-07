@@ -1,20 +1,29 @@
 package com.kishan.productservice.models;
 
-//import jakarta.persistence.Id;
-//import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
-//import org.springframework.data.annotation.CreatedDate;
-//import org.springframework.data.annotation.LastModifiedDate;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 
-@Data
-//@MappedSuperclass
+@Getter
+@Setter
+@MappedSuperclass
 public class BaseModel {
-//    @Id
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-//    @CreatedDate
+
+    @CreatedDate
     private Date createdAt;
-//    @LastModifiedDate
+
+    @LastModifiedDate
     private Date updatedAt;
 }

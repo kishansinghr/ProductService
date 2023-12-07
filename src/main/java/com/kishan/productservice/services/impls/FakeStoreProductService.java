@@ -2,7 +2,7 @@ package com.kishan.productservice.services.impls;
 
 import com.kishan.productservice.dtos.FakeStoreDto;
 import com.kishan.productservice.dtos.GenericProductDto;
-import com.kishan.productservice.dtos.ProductMapper;
+import com.kishan.productservice.mappers.ProductMapper;
 import com.kishan.productservice.exceptions.ProductNotFoundException;
 import com.kishan.productservice.exceptions.SomethingWentWrongException;
 import com.kishan.productservice.services.ProductService;
@@ -17,11 +17,9 @@ import java.util.List;
 public class FakeStoreProductService implements ProductService {
 
     private final FakeStoreClient fakeStoreClient;
-    private final ProductMapper productMapper;
     @Autowired
-    FakeStoreProductService(FakeStoreClient fakeStoreClient, ProductMapper productMapper) {
+    FakeStoreProductService(FakeStoreClient fakeStoreClient) {
         this.fakeStoreClient = fakeStoreClient;
-        this.productMapper = productMapper;
     }
 
     @Override
@@ -29,7 +27,7 @@ public class FakeStoreProductService implements ProductService {
         List<FakeStoreDto> fakeStoreProducts = fakeStoreClient.getAllProducts();
         List<GenericProductDto> productList = new ArrayList<>();
         for (FakeStoreDto fakeStoreDto : fakeStoreProducts) {
-            productList.add(productMapper.convertToGenericProductDto(fakeStoreDto));
+            productList.add(ProductMapper.convertToGenericProductDto(fakeStoreDto));
         }
         return productList;
     }
@@ -38,20 +36,20 @@ public class FakeStoreProductService implements ProductService {
     public GenericProductDto getProductById(long id) throws ProductNotFoundException, SomethingWentWrongException {
         FakeStoreDto fakeStoreDto = fakeStoreClient.getProductById(id);
         if(fakeStoreDto == null) {
-            throw new ProductNotFoundException("Product not found by id "+id+".");
+            throw new ProductNotFoundException(id);
         } else {
-            return productMapper.convertToGenericProductDto(fakeStoreDto);
+            return ProductMapper.convertToGenericProductDto(fakeStoreDto);
         }
     }
 
     @Override
     public GenericProductDto updateProductById(long id, GenericProductDto dto)  throws ProductNotFoundException {
         FakeStoreDto fakeStoreDto
-                = fakeStoreClient.updateProductById(id, productMapper.convertToFakeStoreDto(dto));
+                = fakeStoreClient.updateProductById(id, ProductMapper.convertToFakeStoreDto(dto));
         if(fakeStoreDto != null) {
-            return productMapper.convertToGenericProductDto(fakeStoreDto);
+            return ProductMapper.convertToGenericProductDto(fakeStoreDto);
         } else {
-            throw new ProductNotFoundException("Product not found by id "+id+".");
+            throw new ProductNotFoundException(id);
         }
     }
 
@@ -59,16 +57,16 @@ public class FakeStoreProductService implements ProductService {
     public GenericProductDto deleteProductById(long id) throws ProductNotFoundException {
         FakeStoreDto fakeStoreDto = fakeStoreClient.deleteProductById(id);
         if(fakeStoreDto != null) {
-            return productMapper.convertToGenericProductDto(fakeStoreDto);
+            return ProductMapper.convertToGenericProductDto(fakeStoreDto);
         } else {
-            throw new ProductNotFoundException("Product not found by id "+id+".");
+            throw new ProductNotFoundException(id);
         }
     }
 
     @Override
     public GenericProductDto createProduct(GenericProductDto dto) {
-        FakeStoreDto requestDto = productMapper.convertToFakeStoreDto(dto);
+        FakeStoreDto requestDto = ProductMapper.convertToFakeStoreDto(dto);
         FakeStoreDto responseProduct = fakeStoreClient.createProduct(requestDto);
-        return productMapper.convertToGenericProductDto(responseProduct);
+        return ProductMapper.convertToGenericProductDto(responseProduct);
     }
 }

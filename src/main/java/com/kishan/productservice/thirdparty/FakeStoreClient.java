@@ -61,7 +61,7 @@ public class FakeStoreClient {
         if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             return responseEntity.getBody();
         } else {
-            throw new ProductNotFoundException("Product not found by id " + id + ".");
+            throw new ProductNotFoundException(id);
         }
     }
 
@@ -78,7 +78,7 @@ public class FakeStoreClient {
         if (responseEntity.getBody() != null) {
             return responseEntity.getBody();
         } else {
-            throw new ProductNotFoundException("Product not found by id " + id + ".");
+            throw new ProductNotFoundException(id);
         }
     }
 
