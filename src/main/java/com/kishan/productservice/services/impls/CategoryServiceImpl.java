@@ -31,8 +31,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto updateCategory(CategoryDto dto) {
         Category categoryEntity = CategoryMapper.convertDtoToEntity(dto);
-        Category savedCategory = categoryRepository.save(categoryEntity);
-        return CategoryMapper.convertEntityToDto(savedCategory);
+        Optional<Category> optionalCategory = categoryRepository.findById(dto.getId());
+        if (optionalCategory.isPresent()) {
+            Category savedCategory = categoryRepository.save(categoryEntity);
+            return CategoryMapper.convertEntityToDto(savedCategory);
+        } else {
+            throw new CategoryNotFoundException(dto.getId());
+        }
     }
 
     @Override
@@ -45,8 +50,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto deleteCategoryById(long id) throws CategoryNotFoundException {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
-        if(optionalCategory.isEmpty())
+        if (optionalCategory.isEmpty())
             throw new CategoryNotFoundException(id);
+
+        categoryRepository.delete(optionalCategory.get());
 
         return CategoryMapper.convertEntityToDto(optionalCategory.get());
     }

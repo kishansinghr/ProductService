@@ -44,7 +44,7 @@ public class ProductServiceDBImpl implements ProductService {
     }
 
     @Override
-    public GenericProductDto updateProductById(long id, GenericProductDto dto) {
+    public GenericProductDto updateProductById(long id, GenericProductDto dto) throws ProductNotFoundException {
         Product productEntity = ProductMapper.convertGenericDtoToProductModel(dto);
         productEntity.setId(id);
 
@@ -59,8 +59,13 @@ public class ProductServiceDBImpl implements ProductService {
         }
 
         productEntity.setCategory(category);
-        Product savedProduct = productRepository.save(productEntity);
-        return ProductMapper.convertProductModelToGenericProductDto(savedProduct);
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            Product savedProduct = productRepository.save(productEntity);
+            return ProductMapper.convertProductModelToGenericProductDto(savedProduct);
+        } else {
+            throw new ProductNotFoundException(id);
+        }
     }
 
     @Override
