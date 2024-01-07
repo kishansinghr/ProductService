@@ -1,6 +1,5 @@
 package com.kishan.productservice.dtos;
 
-import com.kishan.productservice.models.Category;
 import lombok.Data;
 
 @Data

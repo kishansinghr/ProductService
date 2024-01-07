@@ -3,7 +3,7 @@ package com.kishan.productservice.thirdparty;
 import java.util.*;
 
 class Solution {
-    public class Pair<K, V> {
+    public static class Pair<K, V> {
         private K key;
         private V value;
 
@@ -59,7 +59,7 @@ class Solution {
                 .orElse(locationToServerMapping.entrySet().stream().findFirst().get());
         /* when no server to right on the ring, assign the first server from start of the ring */
         String serverID = it.getValue();
-        serverToKeyMappings.computeIfAbsent(serverID, k -> new ArrayList<>()).add(new Solution.Pair<>(keyname, hashKey));
+        serverToKeyMappings.computeIfAbsent(serverID, k -> new ArrayList<>()).add(new Pair<>(keyname, hashKey));
         return it.getKey();
     }
 
@@ -109,20 +109,24 @@ class Solution {
 
     void performOperation(String A, String B, int C) {
         String operation = A;
-        if (operation.equals("ADD")) {
-            String serverID = B;
-            answers.add(addServer(serverID, C));
-        } else if (operation.equals("REMOVE")) {
-            String serverID = B;
-            answers.add(removeServer(serverID, C));
-        } else if (operation.equals("ASSIGN")) {
-            String keyname = B;
-            answers.add(assignRequest(keyname, C));
+        switch (operation) {
+            case "ADD" -> {
+                String serverID = B;
+                answers.add(addServer(serverID, C));
+            }
+            case "REMOVE" -> {
+                String serverID = B;
+                answers.add(removeServer(serverID, C));
+            }
+            case "ASSIGN" -> {
+                String keyname = B;
+                answers.add(assignRequest(keyname, C));
+            }
         }
     }
 
     public ArrayList<Integer> solve(ArrayList<String> A, ArrayList<String> B, ArrayList<Integer> C) {
-        answers = new ArrayList<Integer>();
+        answers = new ArrayList<>();
         locationToServerMapping = new TreeMap<>();
         serverToKeyMappings = new HashMap<>();
         for (int i = 0; i < A.size(); i++) {

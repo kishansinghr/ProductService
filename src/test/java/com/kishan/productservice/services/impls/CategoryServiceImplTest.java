@@ -5,7 +5,6 @@ import com.kishan.productservice.mappers.CategoryMapper;
 import com.kishan.productservice.models.Category;
 import com.kishan.productservice.repositories.CategoryRepository;
 import com.kishan.productservice.services.CategoryService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,13 +28,6 @@ class CategoryServiceImplTest {
     void init() {
         categoryRepository = mock(CategoryRepository.class);
         categoryService = new CategoryServiceImpl(categoryRepository);
-    }
-//    @BeforeEach
-//    void setUp() {
-//    }
-
-    @AfterEach
-    void tearDown() {
     }
 
     @Test
